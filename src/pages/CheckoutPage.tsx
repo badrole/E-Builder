@@ -1,17 +1,41 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { formatRupiah } from '../utils/helpers';
+import { formatRupiah, openProviderWhatsApp } from '../utils/helpers';
 import { useStore } from '../store/useStore';
+import { stores } from '../data/mockData';
 
 export default function CheckoutPage() {
   const { cart, clearCart, addMaterialOrder } = useStore();
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', phone: '', address: '', note: '', paymentMethod: 'transfer', delivery: 'regular' });
-  const [done, setDone] = useState(false);
+  const [submittedCart, setSubmittedCart] = useState<any[] | null>(null);
   const subtotal = cart.reduce((t, c) => t + c.price * c.quantity, 0);
   const deliveryCost = form.delivery === 'express' ? 100000 : 50000;
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); addMaterialOrder({ ...form, items: cart, total: subtotal + deliveryCost }); clearCart(); setDone(true); };
-  if (done) return <div className="max-w-lg mx-auto px-4 py-16 text-center space-y-6"><div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center"><span className="material-symbols-outlined text-4xl text-green-600">check_circle</span></div><h2 className="text-h3 font-bold text-primary">Pesanan Berhasil!</h2><p className="text-on-surface-variant">Pesanan Anda sedang diproses. Silakan lakukan pembayaran.</p><div className="flex gap-3 justify-center"><Link to="/dashboard" className="btn-primary">Dashboard</Link><Link to="/materials" className="btn-outline">Belanja Lagi</Link></div></div>;
+  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); addMaterialOrder({ ...form, items: cart, total: subtotal + deliveryCost }); setSubmittedCart([...cart]); clearCart(); };
+  
+  if (submittedCart) {
+    const storeIds = Array.from(new Set(submittedCart.map(c => c.storeId)));
+    const relatedStores = storeIds.map(id => stores.find(s => s.id === id)).filter(Boolean) as any[];
+
+    return (
+      <div className="max-w-lg mx-auto px-4 py-16 text-center space-y-6">
+        <div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center"><span className="material-symbols-outlined text-4xl text-green-600">check_circle</span></div>
+        <h2 className="text-h3 font-bold text-primary">Pesanan Berhasil!</h2>
+        <p className="text-on-surface-variant">Pesanan Anda sedang diproses. Silakan lakukan pembayaran dan konfirmasi via WhatsApp ke toko terkait.</p>
+        <div className="flex flex-col gap-3 justify-center">
+          {relatedStores.map(store => (
+            <button key={store.id} onClick={() => openProviderWhatsApp(store.whatsappNumber, `Halo ${store.name}, saya telah melakukan pemesanan material dari E-Builder.`)} className="btn-cta w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white border-none">
+              <span className="material-symbols-outlined">chat</span>Chat {store.name}
+            </button>
+          ))}
+          <div className="flex gap-3 justify-center mt-4">
+            <Link to="/dashboard" className="btn-primary flex-1">Dashboard</Link>
+            <Link to="/materials" className="btn-outline flex-1">Belanja Lagi</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (cart.length === 0) { navigate('/cart'); return null; }
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-8 py-8 space-y-6">

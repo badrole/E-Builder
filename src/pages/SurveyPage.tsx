@@ -1,13 +1,38 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useStore } from '../store/useStore';
+import { constructPackages } from '../data/mockData';
+import { openProviderWhatsApp } from '../utils/helpers';
 
 export default function SurveyPage() {
   const { addSurveyRequest } = useStore();
+  const [searchParams] = useSearchParams();
+  const pkgId = searchParams.get('pkgId');
   const [done, setDone] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', email: '', address: '', type: 'Renovasi', details: '', preferredDate: '' });
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); addSurveyRequest(form); setDone(true); };
-  if (done) return <div className="max-w-lg mx-auto px-4 py-16 text-center space-y-6"><div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center"><span className="material-symbols-outlined text-4xl text-green-600">check_circle</span></div><h2 className="text-h3 font-bold text-primary">Permintaan Survei Terkirim!</h2><p className="text-on-surface-variant">Tim kami akan menghubungi Anda dalam 1x24 jam untuk menjadwalkan survei lokasi.</p><Link to="/dashboard" className="btn-primary inline-block">Lihat Dashboard</Link></div>;
+  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); addSurveyRequest({ ...form, pkgId }); setDone(true); };
+  
+  if (done) {
+    const pkg = pkgId ? constructPackages.find(p => p.id === pkgId) : null;
+    return (
+      <div className="max-w-lg mx-auto px-4 py-16 text-center space-y-6">
+        <div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center"><span className="material-symbols-outlined text-4xl text-green-600">check_circle</span></div>
+        <h2 className="text-h3 font-bold text-primary">Permintaan Survei Terkirim!</h2>
+        <p className="text-on-surface-variant">Tim kami akan menghubungi Anda dalam 1x24 jam untuk menjadwalkan survei lokasi.</p>
+        <div className="flex flex-col gap-3 justify-center">
+          {pkg && (
+            <button onClick={() => openProviderWhatsApp(pkg.whatsappNumber, `Halo tim ${pkg.name}, saya telah meminta survei lokasi melalui E-Builder.`)} className="btn-cta w-full flex items-center justify-center gap-2">
+              <span className="material-symbols-outlined">chat</span>Chat Tim {pkg.name} via WhatsApp
+            </button>
+          )}
+          <div className="flex gap-3 justify-center mt-2">
+            <Link to="/dashboard" className="btn-primary flex-1">Lihat Dashboard</Link>
+            {!pkg && <a href="https://wa.me/6285749780759?text=Halo%20Customer%20Service%20E-Builder%2C%20saya%20butuh%20bantuan." target="_blank" rel="noreferrer" className="btn-outline flex-1 text-center">Tanya CS E-Builder</a>}
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-8 py-8 space-y-6">
       <Link to="/e-construct" className="inline-flex items-center gap-2 text-primary font-semibold"><span className="material-symbols-outlined">arrow_back</span>Kembali</Link>

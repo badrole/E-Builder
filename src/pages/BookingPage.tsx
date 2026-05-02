@@ -1,7 +1,7 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 import { workers, categories } from '../data/mockData';
-import { formatRupiah } from '../utils/helpers';
+import { formatRupiah, openProviderWhatsApp } from '../utils/helpers';
 import { useStore } from '../store/useStore';
 
 export default function BookingPage() {
@@ -26,7 +26,13 @@ export default function BookingPage() {
       <div className="bg-white rounded-2xl border border-outline-variant p-6 text-left space-y-2">
         <p className="text-sm"><strong>Kategori:</strong> {form.category}</p><p className="text-sm"><strong>Tanggal:</strong> {form.date}</p><p className="text-sm"><strong>Waktu:</strong> {form.time}</p><p className="text-sm"><strong>Alamat:</strong> {form.address}</p><p className="text-sm"><strong>Estimasi:</strong> {formatRupiah(w.price)}</p>
       </div>
-      <div className="flex gap-3 justify-center"><Link to="/dashboard" className="btn-primary">Lihat Dashboard</Link><Link to="/e-renov" className="btn-outline">Cari Jasa Lain</Link></div>
+      <div className="flex flex-col gap-3 justify-center">
+        <button onClick={() => openProviderWhatsApp(w.whatsappNumber, "Halo, saya pelanggan E-Builder. Saya sudah melakukan pemesanan layanan.")} className="btn-cta w-full flex items-center justify-center gap-2"><span className="material-symbols-outlined">chat</span>Chat Penyedia via WhatsApp</button>
+        <div className="flex gap-3 justify-center">
+          <Link to="/dashboard" className="btn-primary flex-1">Lihat Dashboard</Link>
+          <a href="https://wa.me/6285749780759?text=Halo%20Customer%20Service%20E-Builder%2C%20saya%20butuh%20bantuan." target="_blank" rel="noreferrer" className="btn-outline flex-1 text-center">Butuh Bantuan CS?</a>
+        </div>
+      </div>
     </div>
   );
 

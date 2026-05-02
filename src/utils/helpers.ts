@@ -72,3 +72,16 @@ export function getSearchRoute(query: string): string {
   if (/konsultasi|ahli|arsitek|interior/.test(q)) return '/consultation';
   return '/e-renov';
 }
+
+export function formatWhatsAppNumber(phone: string): string {
+  const cleaned = phone.replace(/\D/g, "");
+  if (cleaned.startsWith("08")) return "62" + cleaned.slice(1);
+  if (cleaned.startsWith("8")) return "62" + cleaned;
+  return cleaned;
+}
+
+export function openProviderWhatsApp(phone: string, message: string): void {
+  const formattedPhone = formatWhatsAppNumber(phone);
+  const url = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank", "noopener,noreferrer");
+}

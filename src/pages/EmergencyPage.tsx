@@ -1,17 +1,34 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { emergencyCategories, emergencyTechnicians } from '../data/mockData';
-import { formatRupiah } from '../utils/helpers';
+import { formatRupiah, openProviderWhatsApp } from '../utils/helpers';
 import { useStore } from '../store/useStore';
 
 export default function EmergencyPage() {
   const [selectedCat, setSelectedCat] = useState('');
   const [form, setForm] = useState({ address: '', phone: '', urgency: 'normal', details: '' });
-  const [done, setDone] = useState(false);
+  const [doneId, setDoneId] = useState<string | null>(null);
   const { addEmergencyRequest } = useStore();
   const filtered = selectedCat ? emergencyTechnicians.filter(t => t.category === selectedCat) : emergencyTechnicians;
-  const handleSubmit = (techId: string) => { addEmergencyRequest({ ...form, category: selectedCat, technicianId: techId }); setDone(true); };
+  const handleSubmit = (techId: string) => { addEmergencyRequest({ ...form, category: selectedCat, technicianId: techId }); setDoneId(techId); };
 
-  if (done) return <div className="max-w-lg mx-auto px-4 py-16 text-center space-y-6"><div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center"><span className="material-symbols-outlined text-4xl text-green-600">check_circle</span></div><h2 className="text-h3 font-bold text-primary">Permintaan Darurat Terkirim!</h2><p className="text-on-surface-variant">Teknisi akan segera menghubungi Anda.</p></div>;
+  if (doneId) {
+    const t = emergencyTechnicians.find(x => x.id === doneId)!;
+    return (
+      <div className="max-w-lg mx-auto px-4 py-16 text-center space-y-6">
+        <div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center"><span className="material-symbols-outlined text-4xl text-green-600">check_circle</span></div>
+        <h2 className="text-h3 font-bold text-primary">Permintaan Darurat Terkirim!</h2>
+        <p className="text-on-surface-variant">Teknisi <strong>{t.name}</strong> akan segera menghubungi dan menuju ke lokasi Anda.</p>
+        <div className="flex flex-col gap-3 justify-center">
+          <button onClick={() => openProviderWhatsApp(t.whatsappNumber, "Halo, saya pelanggan E-Builder. Saya sudah melakukan pemesanan layanan darurat.")} className="btn-error w-full flex items-center justify-center gap-2"><span className="material-symbols-outlined">chat</span>Chat Teknisi via WhatsApp</button>
+          <div className="flex gap-3 justify-center">
+            <Link to="/dashboard" className="btn-primary flex-1">Lihat Dashboard</Link>
+            <a href="https://wa.me/6285749780759?text=Halo%20Customer%20Service%20E-Builder%2C%20saya%20butuh%20bantuan." target="_blank" rel="noreferrer" className="btn-outline flex-1 text-center">Butuh Bantuan CS?</a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-container mx-auto px-4 sm:px-8 py-8 space-y-8">
