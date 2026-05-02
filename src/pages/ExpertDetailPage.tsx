@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { experts } from '../data/mockData';
 import { formatRupiah } from '../utils/helpers';
+import PriceCountUp from '../components/PriceCountUp';
 
 export default function ExpertDetailPage() {
   const { id } = useParams();
@@ -19,7 +20,7 @@ export default function ExpertDetailPage() {
           <div className="bg-white rounded-2xl border border-outline-variant p-6 space-y-3"><h3 className="font-bold">Jadwal Tersedia</h3><ul className="space-y-2">{e.schedule.map((s, i) => <li key={i} className="flex items-center gap-2 text-sm"><span className="material-symbols-outlined text-primary text-sm">schedule</span>{s}</li>)}</ul></div>
         </div>
         <div className="bg-white rounded-2xl border border-outline-variant p-6 space-y-4 sticky top-24 h-fit">
-          <div className="p-4 bg-primary/5 rounded-xl text-center"><p className="text-sm text-outline font-semibold">Biaya Konsultasi</p><p className="text-3xl font-black text-primary">{formatRupiah(e.fee)}</p><p className="text-sm text-on-surface-variant">{e.feeUnit}</p></div>
+          <div className="p-4 bg-primary/5 rounded-xl text-center"><p className="text-sm text-outline font-semibold">Biaya Konsultasi</p><p className="text-3xl font-black text-primary"><PriceCountUp value={e.fee} /></p><p className="text-sm text-on-surface-variant">{e.feeUnit}</p></div>
           <Link to={`/consultation/book/${e.id}`} className="btn-cta w-full text-center block">Booking Konsultasi</Link>
           <a href={`https://wa.me/62${e.phone.slice(1)}`} target="_blank" rel="noreferrer" className="btn-outline w-full text-center block">Chat WhatsApp</a>
         </div>

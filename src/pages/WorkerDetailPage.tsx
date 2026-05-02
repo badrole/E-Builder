@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { workers, reviews } from '../data/mockData';
 import { formatRupiah } from '../utils/helpers';
 import { useStore } from '../store/useStore';
+import PriceCountUp from '../components/PriceCountUp';
 
 export default function WorkerDetailPage() {
   const { id } = useParams();
@@ -37,7 +38,7 @@ export default function WorkerDetailPage() {
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-outline-variant p-6 space-y-4 sticky top-24">
             <h3 className="font-bold text-lg">Ringkasan Harga</h3>
-            <div className="p-4 bg-primary/5 rounded-xl"><p className="text-3xl font-black text-primary">{formatRupiah(w.price)}</p><p className="text-sm text-on-surface-variant">{w.priceUnit}</p></div>
+            <div className="p-4 bg-primary/5 rounded-xl"><p className="text-3xl font-black text-primary"><PriceCountUp value={w.price} /></p><p className="text-sm text-on-surface-variant">{w.priceUnit}</p></div>
             <div className="space-y-2 text-sm"><div className="flex items-center gap-2"><span className="material-symbols-outlined text-green-500 text-sm">check_circle</span>{w.warranty}</div><div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary text-sm">phone</span>{w.phone}</div></div>
             <Link to={`/booking/${w.id}`} className="btn-cta w-full text-center block">Booking Sekarang</Link>
             <a href={`https://wa.me/62${w.phone.slice(1)}`} target="_blank" rel="noreferrer" className="btn-outline w-full text-center block">Chat WhatsApp</a>

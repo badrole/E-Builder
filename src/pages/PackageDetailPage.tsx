@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { constructPackages } from '../data/mockData';
 import { formatRupiah } from '../utils/helpers';
+import PriceCountUp from '../components/PriceCountUp';
 
 export default function PackageDetailPage() {
   const { id } = useParams();
@@ -20,7 +21,7 @@ export default function PackageDetailPage() {
         </div>
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-outline-variant p-6 sticky top-24 space-y-4">
-            <div className="p-4 bg-primary/5 rounded-xl"><p className="text-sm text-outline font-semibold">Mulai dari</p><p className="text-3xl font-black text-primary">{formatRupiah(pkg.price)}</p><p className="text-sm text-on-surface-variant">{pkg.duration}</p></div>
+            <div className="p-4 bg-primary/5 rounded-xl"><p className="text-sm text-outline font-semibold">Mulai dari</p><p className="text-3xl font-black text-primary"><PriceCountUp value={pkg.price} /></p><p className="text-sm text-on-surface-variant">{pkg.duration}</p></div>
             <div><h4 className="font-semibold mb-2">Milestone Pembayaran</h4>{pkg.milestones.map((m, i) => <div key={i} className="flex justify-between text-sm py-2 border-b border-outline-variant/30 last:border-0"><span>{m.name}</span><span className="font-bold">{m.pct}%</span></div>)}</div>
             <Link to={`/e-construct/survey?pkgId=${pkg.id}`} className="btn-cta w-full text-center block">Minta Survei Gratis</Link>
             <Link to="/consultation" className="btn-outline w-full text-center block">Konsultasi Dulu</Link>

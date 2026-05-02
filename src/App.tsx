@@ -4,6 +4,7 @@ import Footer from './components/layout/Footer';
 import MobileNav from './components/layout/MobileNav';
 import ChatbotFAB from './components/layout/ChatbotFAB';
 import Toast from './components/ui/Toast';
+import ClickSpark from './components/ClickSpark';
 import { lazy, Suspense } from 'react';
 
 const Home = lazy(() => import('./pages/HomePage'));
@@ -97,6 +98,7 @@ export default function App() {
       <MobileNav />
       <ChatbotFAB />
       <Toast />
+      <ClickSpark sparkColor="#FBBF24" sparkSize={10} duration={600} />
     </div>
   );
 }

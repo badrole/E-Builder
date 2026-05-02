@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { products } from '../data/mockData';
 import { formatRupiah } from '../utils/helpers';
 import { useStore } from '../store/useStore';
+import PriceCountUp from '../components/PriceCountUp';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -17,7 +18,7 @@ export default function ProductDetailPage() {
         <div className="aspect-square bg-surface-container rounded-2xl overflow-hidden"><img className="w-full h-full object-cover" src={p.image} alt={p.name} /></div>
         <div className="space-y-6">
           <div><span className="chip mb-2 inline-block">{p.category}</span><h1 className="text-h2 font-bold">{p.name}</h1><p className="text-on-surface-variant mt-2">Dari <Link to={`/materials/store/${p.storeId}`} className="text-primary font-semibold hover:underline">{p.storeName}</Link></p></div>
-          <div className="p-6 bg-primary/5 rounded-2xl"><p className="text-4xl font-black text-primary">{formatRupiah(p.price)}</p><p className="text-on-surface-variant">per {p.unit}</p></div>
+          <div className="p-6 bg-primary/5 rounded-2xl"><p className="text-4xl font-black text-primary"><PriceCountUp value={p.price} /></p><p className="text-on-surface-variant">per {p.unit}</p></div>
           <div className="space-y-2"><p className="text-sm"><strong>Spesifikasi:</strong> {p.spec}</p><p className="text-sm"><strong>Stok:</strong> {p.stock} {p.unit}</p><p className="text-sm"><strong>Estimasi pengiriman:</strong> {p.delivery}</p></div>
           <div className="flex items-center gap-4"><span className="font-semibold">Jumlah:</span><div className="flex items-center border border-outline-variant rounded-lg"><button onClick={() => setQty(Math.max(1, qty-1))} className="px-3 py-2 hover:bg-surface-container">-</button><span className="px-4 py-2 font-bold border-x border-outline-variant">{qty}</span><button onClick={() => setQty(qty+1)} className="px-3 py-2 hover:bg-surface-container">+</button></div></div>
           <div className="flex gap-3"><button onClick={() => addToCart({productId:p.id,name:p.name,price:p.price,quantity:qty,unit:p.unit,image:p.image,storeName:p.storeName})} className="btn-cta flex-1 flex items-center justify-center gap-2"><span className="material-symbols-outlined">add_shopping_cart</span>Tambah ke Keranjang</button></div>
