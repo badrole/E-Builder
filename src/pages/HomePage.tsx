@@ -41,7 +41,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="lg:col-span-6 relative h-[300px] sm:h-[400px] lg:h-[500px] mt-8 lg:mt-0">
-            <div className="absolute inset-0 bg-gradient-to-tr from-royal-blue/20 to-transparent rounded-[32px] -rotate-3 translate-x-4"></div>
+            <div className="absolute inset-0 bg-gradient-to-tr from-royal-blue/20 to-transparent rounded-[32px] -rotate-3 translate-x-4 animate-soft-float"></div>
             <div className="absolute inset-0 bg-white rounded-[32px] shadow-2xl overflow-hidden border border-outline-variant">
               <img alt="Modern Architecture" className="w-full h-full object-cover" src={IMAGES.hero} />
               <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-8 glass-card p-4 sm:p-6 rounded-2xl">
@@ -55,7 +55,7 @@ export default function HomePage() {
 
       {/* Banner Carousel */}
       <section className="max-w-container mx-auto px-4 sm:px-8 -mt-8 relative z-20">
-        <div className="relative overflow-hidden rounded-2xl">
+        <div className="relative overflow-hidden rounded-2xl shadow-card-hover animate-sheen">
           <div className={`bg-gradient-to-r ${banners[slide].bg} p-8 sm:p-12 text-white transition-all duration-500`}>
             <h3 className="text-2xl sm:text-3xl font-bold mb-2">{banners[slide].title}</h3>
             <p className="text-blue-100 text-lg">{banners[slide].sub}</p>
