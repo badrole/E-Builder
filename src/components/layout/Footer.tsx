@@ -4,7 +4,7 @@ import { IMAGES } from '../../data/images';
 export default function Footer() {
   return (
     <footer className="bg-slate-50 py-16 border-t border-slate-200">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-4 md:px-6 lg:px-8 max-w-container mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-4 sm:px-8 max-w-container mx-auto">
         <div>
           <img alt="E-Builder" className="h-8 w-auto mb-6" src={IMAGES.logo} />
           <p className="text-slate-600 text-sm leading-relaxed mb-6">Platform digital premium untuk renovasi, konstruksi, dan marketplace material bangunan di Indonesia.</p>

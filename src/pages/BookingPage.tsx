@@ -23,8 +23,8 @@ export default function BookingPage() {
       <div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center"><span className="material-symbols-outlined text-4xl text-green-600">check_circle</span></div>
       <h2 className="text-h3 font-bold text-primary">Booking Berhasil!</h2>
       <p className="text-on-surface-variant">Booking Anda dengan <strong>{w.name}</strong> telah berhasil dibuat. Anda akan menerima konfirmasi segera.</p>
-      <div className="bg-white rounded-2xl border border-outline-variant p-6 text-left space-y-2 overflow-hidden">
-        <p className="text-sm break-words"><strong>Kategori:</strong> {form.category}</p><p className="text-sm"><strong>Tanggal:</strong> {form.date}</p><p className="text-sm"><strong>Waktu:</strong> {form.time}</p><p className="text-sm break-words"><strong>Alamat:</strong> {form.address}</p><p className="text-sm price-text"><strong>Estimasi:</strong> {formatRupiah(w.price)}</p>
+      <div className="bg-white rounded-2xl border border-outline-variant p-6 text-left space-y-2">
+        <p className="text-sm"><strong>Kategori:</strong> {form.category}</p><p className="text-sm"><strong>Tanggal:</strong> {form.date}</p><p className="text-sm"><strong>Waktu:</strong> {form.time}</p><p className="text-sm"><strong>Alamat:</strong> {form.address}</p><p className="text-sm"><strong>Estimasi:</strong> {formatRupiah(w.price)}</p>
       </div>
       <div className="flex flex-col gap-3 justify-center">
         <button onClick={() => openProviderWhatsApp(w.whatsappNumber, "Halo, saya pelanggan E-Builder. Saya sudah melakukan pemesanan layanan.")} className="btn-cta w-full flex items-center justify-center gap-2"><span className="material-symbols-outlined">chat</span>Chat Penyedia via WhatsApp</button>
@@ -37,10 +37,10 @@ export default function BookingPage() {
   );
 
   return (
-    <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-6 overflow-hidden">
+    <div className="max-w-3xl mx-auto px-4 sm:px-8 py-8 space-y-6">
       <Link to={`/worker/${w.id}`} className="inline-flex items-center gap-2 text-primary font-semibold"><span className="material-symbols-outlined">arrow_back</span>Kembali</Link>
       <h1 className="text-h2 font-bold text-primary">Booking Jasa</h1>
-      <div className="bg-white rounded-2xl border border-outline-variant p-4 flex items-center gap-4 overflow-hidden"><img className="w-16 h-16 rounded-xl object-cover flex-shrink-0" src={w.image} alt={w.name} /><div className="min-w-0"><h3 className="font-bold break-words">{w.name}</h3><p className="text-caption text-on-surface-variant break-words">{w.spec} • {w.city}</p><p className="text-primary font-bold price-text">{formatRupiah(w.price)}{w.priceUnit}</p></div></div>
+      <div className="bg-white rounded-2xl border border-outline-variant p-4 flex items-center gap-4"><img className="w-16 h-16 rounded-xl object-cover" src={w.image} alt={w.name} /><div><h3 className="font-bold">{w.name}</h3><p className="text-caption text-on-surface-variant">{w.spec} • {w.city}</p><p className="text-primary font-bold">{formatRupiah(w.price)}{w.priceUnit}</p></div></div>
       <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-outline-variant p-6 sm:p-8 space-y-6">
         <div><label className="text-sm font-semibold block mb-2">Kategori Layanan</label><select value={form.category} onChange={e => setForm({...form, category: e.target.value})} className="input-field">{categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}</select></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -54,7 +54,7 @@ export default function BookingPage() {
             <label key={m.v} className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${form.paymentMethod === m.v ? 'border-royal-blue bg-blue-50' : 'border-outline-variant'}`}><input type="radio" name="payment" value={m.v} checked={form.paymentMethod === m.v} onChange={e => setForm({...form, paymentMethod: e.target.value})} className="sr-only" /><span className="material-symbols-outlined text-primary">{m.i}</span><span className="font-semibold text-sm">{m.l}</span></label>
           ))}
         </div></div>
-        <div className="p-4 bg-primary/5 rounded-xl flex justify-between items-center gap-3 overflow-hidden"><span className="font-semibold">Estimasi Biaya</span><span className="text-2xl md:text-3xl font-black text-primary price-text-strong text-right">{formatRupiah(w.price)}</span></div>
+        <div className="p-4 bg-primary/5 rounded-xl flex justify-between items-center"><span className="font-semibold">Estimasi Biaya</span><span className="text-2xl font-black text-primary">{formatRupiah(w.price)}</span></div>
         <button type="submit" className="btn-cta w-full text-center text-lg">Konfirmasi Booking</button>
       </form>
     </div>

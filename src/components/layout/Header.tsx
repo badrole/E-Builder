@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <header className="bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-nav sticky top-0 z-50">
-      <nav className="flex justify-between items-center w-full px-4 md:px-6 lg:px-8 py-3 max-w-container mx-auto">
+      <nav className="flex justify-between items-center w-full px-4 sm:px-8 py-3 max-w-container mx-auto">
         <div className="flex items-center gap-6 lg:gap-12 flex-1">
           <Link to="/"><img alt="E-Builder Logo" className="h-8 sm:h-10 w-auto" src={IMAGES.logo} /></Link>
           <div className="hidden lg:flex items-center gap-6 text-sm font-semibold tracking-tight">

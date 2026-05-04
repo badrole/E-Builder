@@ -12,18 +12,18 @@ export default function WorkerDetailPage() {
   const workerReviews = reviews.filter(r => r.workerId === w.id);
 
   return (
-    <div className="max-w-container mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8 overflow-hidden">
+    <div className="max-w-container mx-auto px-4 sm:px-8 py-8 space-y-8">
       <Link to="/e-renov" className="inline-flex items-center gap-2 text-primary font-semibold"><span className="material-symbols-outlined">arrow_back</span>Kembali</Link>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           <div className="bg-white rounded-2xl border border-outline-variant p-6 sm:p-8">
             <div className="flex flex-wrap gap-6 items-start">
               <img className="w-24 h-24 rounded-2xl object-cover shadow-md" src={w.image} alt={w.name} />
-              <div className="min-w-0 flex-1 space-y-2">
-                <div className="flex items-center gap-2"><h1 className="text-h3 font-bold break-words">{w.name}</h1>{w.verified && <span className="material-symbols-outlined text-primary material-icon-filled">verified</span>}</div>
+              <div className="flex-1 space-y-2">
+                <div className="flex items-center gap-2"><h1 className="text-h3 font-bold">{w.name}</h1>{w.verified && <span className="material-symbols-outlined text-primary material-icon-filled">verified</span>}</div>
                 <p className="text-on-surface-variant font-semibold">{w.spec}</p>
                 <div className="flex flex-wrap gap-2">{w.verified && <span className="chip text-xs">✓ Verified</span>}{w.recommended && <span className="chip text-xs bg-amber-50 text-amber-700">★ Recommended</span>}{w.fastResponse && <span className="chip text-xs bg-green-50 text-green-700">⚡ Fast Response</span>}</div>
-                <div className="flex flex-wrap gap-3 sm:gap-6 mt-4 text-sm"><span className="flex items-center gap-1"><span className="material-symbols-outlined text-warm-amber text-sm material-icon-filled">star</span>{w.rating} ({w.reviews} ulasan)</span><span>{w.jobs} pekerjaan</span><span>{w.exp}</span><span>{w.city}</span></div>
+                <div className="flex gap-6 mt-4 text-sm"><span className="flex items-center gap-1"><span className="material-symbols-outlined text-warm-amber text-sm material-icon-filled">star</span>{w.rating} ({w.reviews} ulasan)</span><span>{w.jobs} pekerjaan</span><span>{w.exp}</span><span>{w.city}</span></div>
               </div>
               <button onClick={() => toggleFavorite('workers', w.id)} className="p-2 rounded-full hover:bg-red-50"><span className={`material-symbols-outlined text-2xl ${isFav ? 'text-red-500 material-icon-filled' : 'text-outline'}`}>favorite</span></button>
             </div>
@@ -38,7 +38,7 @@ export default function WorkerDetailPage() {
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-outline-variant p-6 space-y-4 sticky top-24">
             <h3 className="font-bold text-lg">Ringkasan Harga</h3>
-            <div className="p-4 bg-primary/5 rounded-xl overflow-hidden"><p className="text-2xl md:text-4xl lg:text-5xl font-black text-primary price-text-strong"><PriceCountUp value={w.price} /></p><p className="text-sm text-on-surface-variant">{w.priceUnit}</p></div>
+            <div className="p-4 bg-primary/5 rounded-xl"><p className="text-3xl font-black text-primary"><PriceCountUp value={w.price} /></p><p className="text-sm text-on-surface-variant">{w.priceUnit}</p></div>
             <div className="space-y-2 text-sm"><div className="flex items-center gap-2"><span className="material-symbols-outlined text-green-500 text-sm">check_circle</span>{w.warranty}</div><div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary text-sm">phone</span>{w.phone}</div></div>
             <Link to={`/booking/${w.id}`} className="btn-cta w-full text-center block">Booking Sekarang</Link>
             <a href={`https://wa.me/62${w.phone.slice(1)}`} target="_blank" rel="noreferrer" className="btn-outline w-full text-center block">Chat WhatsApp</a>

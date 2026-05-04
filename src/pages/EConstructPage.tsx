@@ -4,7 +4,7 @@ import { formatRupiah } from '../utils/helpers';
 
 export default function EConstructPage() {
   return (
-    <div className="max-w-container mx-auto px-4 md:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
+    <div className="max-w-container mx-auto px-4 sm:px-8 py-8 sm:py-12 space-y-12">
       <div className="text-center max-w-2xl mx-auto"><span className="chip-active mx-auto mb-4">KONSTRUKSI TERINTEGRASI</span><h1 className="text-h1 font-bold text-primary mt-4">E-Construct</h1><p className="text-body-lg text-on-surface-variant mt-4">Paket konstruksi lengkap dengan tim profesional terverifikasi, dari perencanaan hingga serah terima.</p></div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {constructPackages.map((pkg, i) => (
@@ -13,7 +13,7 @@ export default function EConstructPage() {
             <div className="relative h-48"><img className="w-full h-full object-cover" src={pkg.image} alt={pkg.name} /><div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div><h3 className="absolute bottom-4 left-6 text-white text-h3 font-bold">{pkg.name}</h3></div>
             <div className="p-6 flex-1 flex flex-col space-y-4">
               <p className="text-on-surface-variant text-sm">{pkg.suitable}</p>
-              <div className="p-4 bg-primary/5 rounded-xl overflow-hidden"><p className="text-caption text-outline font-semibold uppercase">Mulai dari</p><p className="text-2xl md:text-3xl lg:text-4xl font-black text-primary price-text-strong">{formatRupiah(pkg.price)}</p><p className="text-caption text-on-surface-variant">{pkg.duration}</p></div>
+              <div className="p-4 bg-primary/5 rounded-xl"><p className="text-caption text-outline font-semibold uppercase">Mulai dari</p><p className="text-2xl font-black text-primary">{formatRupiah(pkg.price)}</p><p className="text-caption text-on-surface-variant">{pkg.duration}</p></div>
               <div><h4 className="font-semibold text-sm mb-2">Tim:</h4><div className="flex flex-wrap gap-1">{pkg.team.map(t => <span key={t} className="chip text-xs">{t}</span>)}</div></div>
               <div><h4 className="font-semibold text-sm mb-2 text-green-700">✓ Termasuk:</h4><ul className="space-y-1">{pkg.included.map(i => <li key={i} className="text-xs text-on-surface-variant flex items-center gap-1"><span className="material-symbols-outlined text-green-500 text-sm">check</span>{i}</li>)}</ul></div>
               <div className="flex-1"></div>

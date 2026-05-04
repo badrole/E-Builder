@@ -38,7 +38,7 @@ export default function CheckoutPage() {
   }
   if (cart.length === 0) { navigate('/cart'); return null; }
   return (
-    <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-6 overflow-hidden">
+    <div className="max-w-3xl mx-auto px-4 sm:px-8 py-8 space-y-6">
       <h1 className="text-h2 font-bold text-primary">Checkout</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="bg-white rounded-2xl border border-outline-variant p-6 space-y-4">
@@ -47,13 +47,13 @@ export default function CheckoutPage() {
           <div><label className="text-sm font-semibold block mb-1">Alamat *</label><textarea required value={form.address} onChange={e => setForm({...form, address: e.target.value})} className="input-field min-h-[80px]" /></div>
           <div><label className="text-sm font-semibold block mb-1">Catatan</label><input value={form.note} onChange={e => setForm({...form, note: e.target.value})} className="input-field" /></div>
         </div>
-        <div className="bg-white rounded-2xl border border-outline-variant p-6 space-y-4"><h3 className="font-bold">Pengiriman</h3><div className="grid grid-cols-1 sm:grid-cols-2 gap-3">{[{v:'regular',l:'Regular (1-3 hari)',p:50000},{v:'express',l:'Express (1 hari)',p:100000}].map(d => <label key={d.v} className={`p-4 rounded-xl border-2 cursor-pointer overflow-hidden ${form.delivery===d.v?'border-royal-blue bg-blue-50':'border-outline-variant'}`}><input type="radio" name="delivery" value={d.v} checked={form.delivery===d.v} onChange={e=>setForm({...form,delivery:e.target.value})} className="sr-only" /><p className="font-semibold text-sm break-words">{d.l}</p><p className="text-primary font-bold price-text">{formatRupiah(d.p)}</p></label>)}</div></div>
+        <div className="bg-white rounded-2xl border border-outline-variant p-6 space-y-4"><h3 className="font-bold">Pengiriman</h3><div className="grid grid-cols-2 gap-3">{[{v:'regular',l:'Regular (1-3 hari)',p:50000},{v:'express',l:'Express (1 hari)',p:100000}].map(d => <label key={d.v} className={`p-4 rounded-xl border-2 cursor-pointer ${form.delivery===d.v?'border-royal-blue bg-blue-50':'border-outline-variant'}`}><input type="radio" name="delivery" value={d.v} checked={form.delivery===d.v} onChange={e=>setForm({...form,delivery:e.target.value})} className="sr-only" /><p className="font-semibold text-sm">{d.l}</p><p className="text-primary font-bold">{formatRupiah(d.p)}</p></label>)}</div></div>
         <div className="bg-white rounded-2xl border border-outline-variant p-6 space-y-4"><h3 className="font-bold">Pembayaran</h3><div className="grid grid-cols-3 gap-3">{[{v:'transfer',l:'Bank Transfer'},{v:'qris',l:'QRIS'},{v:'ewallet',l:'E-Wallet'}].map(m => <label key={m.v} className={`p-3 rounded-xl border-2 cursor-pointer text-center ${form.paymentMethod===m.v?'border-royal-blue bg-blue-50':'border-outline-variant'}`}><input type="radio" name="payment" value={m.v} checked={form.paymentMethod===m.v} onChange={e=>setForm({...form,paymentMethod:e.target.value})} className="sr-only" /><p className="font-semibold text-sm">{m.l}</p></label>)}</div></div>
         <div className="bg-white rounded-2xl border border-outline-variant p-6 space-y-3">
-          <h3 className="font-bold">Ringkasan</h3>{cart.map(c => <div key={c.id} className="flex justify-between gap-3 text-sm"><span className="min-w-0 break-words">{c.name} x{c.quantity}</span><span className="font-semibold price-text-strong text-right">{formatRupiah(c.price*c.quantity)}</span></div>)}
-          <div className="border-t border-outline-variant pt-3"><div className="flex justify-between gap-3 text-sm"><span>Ongkir</span><span className="price-text-strong text-right">{formatRupiah(deliveryCost)}</span></div><div className="flex justify-between gap-3 mt-2"><span className="font-bold">Total</span><span className="text-2xl md:text-3xl font-black text-primary price-text-strong text-right">{formatRupiah(subtotal+deliveryCost)}</span></div></div>
+          <h3 className="font-bold">Ringkasan</h3>{cart.map(c => <div key={c.id} className="flex justify-between text-sm"><span>{c.name} x{c.quantity}</span><span className="font-semibold">{formatRupiah(c.price*c.quantity)}</span></div>)}
+          <div className="border-t border-outline-variant pt-3"><div className="flex justify-between text-sm"><span>Ongkir</span><span>{formatRupiah(deliveryCost)}</span></div><div className="flex justify-between mt-2"><span className="font-bold">Total</span><span className="text-xl font-black text-primary">{formatRupiah(subtotal+deliveryCost)}</span></div></div>
         </div>
-        <button type="submit" className="btn-cta w-full text-lg break-words">Bayar {formatRupiah(subtotal+deliveryCost)}</button>
+        <button type="submit" className="btn-cta w-full text-lg">Bayar {formatRupiah(subtotal+deliveryCost)}</button>
       </form>
     </div>
   );

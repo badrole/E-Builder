@@ -5,7 +5,7 @@ import { useStore } from '../store/useStore';
 export default function TrackingPage() {
   const { bookings } = useStore();
   return (
-    <div className="max-w-container mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-container mx-auto px-4 sm:px-8 py-8 space-y-8">
       <div className="text-center"><h1 className="text-h1 font-bold text-primary">Project Tracking</h1><p className="text-on-surface-variant mt-2">Pantau progres proyek Anda secara real-time.</p></div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {trackingProjects.map(p => (

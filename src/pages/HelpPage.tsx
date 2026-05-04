@@ -5,7 +5,7 @@ import { faqData } from '../data/mockData';
 export default function HelpPage() {
   const [openFaq, setOpenFaq] = useState<string | null>(null);
   return (
-    <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-8 py-8 space-y-8">
       <div className="text-center"><h1 className="text-h1 font-bold text-primary">Pusat Bantuan</h1><p className="text-on-surface-variant mt-2">Temukan jawaban atau hubungi kami.</p></div>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <Link to="/customer-service/whatsapp" className="bg-white rounded-2xl border border-outline-variant p-4 text-center hover:shadow-md"><span className="material-symbols-outlined text-2xl text-green-600">chat</span><p className="text-xs font-bold mt-2">WhatsApp CS</p></Link>

@@ -14,9 +14,9 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="max-w-container mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-container mx-auto px-4 sm:px-8 py-8 space-y-8">
       <div><h1 className="text-h2 font-bold text-primary">Dashboard</h1><p className="text-on-surface-variant">Selamat datang, {userName}!</p></div>
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">{stats.map(s => (<div key={s.label} className="bg-white rounded-2xl border border-outline-variant p-4 space-y-2 overflow-hidden"><div className={`w-10 h-10 rounded-xl flex items-center justify-center ${s.color}`}><span className="material-symbols-outlined">{s.icon}</span></div><p className="text-2xl font-black price-text">{s.value}</p><p className="text-caption text-outline break-words">{s.label}</p></div>))}</div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">{stats.map(s => (<div key={s.label} className="bg-white rounded-2xl border border-outline-variant p-4 space-y-2"><div className={`w-10 h-10 rounded-xl flex items-center justify-center ${s.color}`}><span className="material-symbols-outlined">{s.icon}</span></div><p className="text-2xl font-black">{s.value}</p><p className="text-caption text-outline">{s.label}</p></div>))}</div>
 
       {/* Recent Bookings */}
       <section className="bg-white rounded-2xl border border-outline-variant p-6">
@@ -37,7 +37,7 @@ export default function DashboardPage() {
         <div className="space-y-3">{savedProjects.map(p => (
           <div key={p.id} className="flex items-center justify-between py-3 border-b border-outline-variant/30 last:border-0">
             <div><h4 className="font-semibold text-sm">{p.name}</h4><p className="text-caption text-outline">{p.category} • {p.area}m² • {p.quality}</p></div>
-            <span className="font-bold text-primary price-text-strong text-right">{formatRupiah(p.totalEstimate)}</span>
+            <span className="font-bold text-primary">{formatRupiah(p.totalEstimate)}</span>
           </div>
         ))}</div>
       </section>}

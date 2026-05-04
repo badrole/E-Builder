@@ -7,7 +7,7 @@ export default function TrackingDetailPage() {
   const p = trackingProjects.find(p => p.id === projectId) || trackingProjects[0];
   if (!p) return <div className="text-center py-16"><p>Proyek tidak ditemukan.</p><Link to="/tracking" className="btn-primary mt-4 inline-block">Kembali</Link></div>;
   return (
-    <div className="max-w-container mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-container mx-auto px-4 sm:px-8 py-8 space-y-8">
       <Link to="/tracking" className="inline-flex items-center gap-2 text-primary font-semibold"><span className="material-symbols-outlined">arrow_back</span>Kembali</Link>
       <div className="flex flex-wrap justify-between items-start gap-4"><div><h1 className="text-h2 font-bold text-primary">{p.name}</h1><p className="text-on-surface-variant">{p.type} • {p.location} • Pekerja: {p.worker}</p></div><span className="bg-blue-100 text-primary px-4 py-2 rounded-full font-bold">{p.status}</span></div>
       <div className="w-full bg-surface-container rounded-full h-4"><div className="bg-royal-blue h-4 rounded-full transition-all flex items-center justify-end pr-2" style={{ width: `${p.progress}%` }}><span className="text-white text-xs font-bold">{p.progress}%</span></div></div>
@@ -26,7 +26,7 @@ export default function TrackingDetailPage() {
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-outline-variant p-6 space-y-3">
             <h3 className="font-bold">Milestone Pembayaran</h3>
-            {p.payments.map((pay, i) => (<div key={i} className="flex justify-between items-center gap-3 py-2 border-b border-outline-variant/30 last:border-0"><div className="min-w-0"><p className="font-semibold text-sm break-words">{pay.name}</p><p className={`text-xs font-bold ${pay.status === 'Lunas' ? 'text-green-600' : 'text-amber-600'}`}>{pay.status}</p></div><span className="font-bold price-text-strong text-right">{formatRupiah(pay.amount)}</span></div>))}
+            {p.payments.map((pay, i) => (<div key={i} className="flex justify-between items-center py-2 border-b border-outline-variant/30 last:border-0"><div><p className="font-semibold text-sm">{pay.name}</p><p className={`text-xs font-bold ${pay.status === 'Lunas' ? 'text-green-600' : 'text-amber-600'}`}>{pay.status}</p></div><span className="font-bold">{formatRupiah(pay.amount)}</span></div>))}
           </div>
           <div className="space-y-2"><a href="https://wa.me/6285749780759" target="_blank" rel="noreferrer" className="btn-outline w-full text-center block flex items-center justify-center gap-2"><span className="material-symbols-outlined text-sm">chat</span>Hubungi Support</a><Link to="/help/complaint" className="btn-outline w-full text-center block text-error border-error">Laporkan Masalah</Link></div>
         </div>
