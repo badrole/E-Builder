@@ -5,9 +5,19 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   body {
-    @apply bg-surface text-on-surface font-inter antialiased;
+    @apply bg-surface text-on-surface font-inter antialiased overflow-x-hidden;
+  }
+  main,
+  section,
+  article,
+  aside {
+    min-width: 0;
+  }
+  img {
+    @apply max-w-full;
   }
 }
 
@@ -22,16 +32,16 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
   .card-base {
-    @apply bg-white rounded-2xl border border-outline-variant shadow-card hover:shadow-card-hover transition-all duration-300;
+    @apply bg-white rounded-2xl border border-outline-variant shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden min-w-0;
   }
   .btn-primary {
-    @apply bg-primary-container text-white px-6 py-3 rounded-lg font-semibold text-sm hover:bg-primary hover:-translate-y-0.5 transition-all duration-300 active:scale-95;
+    @apply bg-primary-container text-white px-6 py-3 rounded-lg font-semibold text-sm hover:bg-primary hover:-translate-y-0.5 transition-all duration-300 active:scale-95 max-w-full;
   }
   .btn-cta {
-    @apply bg-cta-amber text-on-background px-6 py-3 rounded-xl font-bold hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-95;
+    @apply bg-cta-amber text-on-background px-6 py-3 rounded-xl font-bold hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-95 max-w-full;
   }
   .btn-outline {
-    @apply border-2 border-primary-container text-primary-container px-6 py-3 rounded-xl font-bold hover:bg-primary-fixed hover:-translate-y-0.5 transition-all duration-300;
+    @apply border-2 border-primary-container text-primary-container px-6 py-3 rounded-xl font-bold hover:bg-primary-fixed hover:-translate-y-0.5 transition-all duration-300 max-w-full;
   }
   .chip {
     @apply flex items-center gap-2 bg-chip-bg px-4 py-2 rounded-full text-caption font-semibold text-primary;
@@ -43,7 +53,13 @@
     @apply w-full px-4 py-3 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-container focus:border-primary-container bg-white text-body-md transition-all;
   }
   .section-container {
-    @apply max-w-container mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-container mx-auto px-4 md:px-6 lg:px-8;
+  }
+  .price-text {
+    @apply max-w-full overflow-hidden break-words leading-tight;
+  }
+  .price-text-strong {
+    @apply max-w-full overflow-hidden break-all leading-tight;
   }
   .material-icon {
     font-family: 'Material Symbols Outlined';

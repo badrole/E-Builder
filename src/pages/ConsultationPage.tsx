@@ -11,7 +11,7 @@ export default function ConsultationPage() {
   const flowSteps = [{ icon: 'person_search', title: 'Pilih Ahli' }, { icon: 'calendar_month', title: 'Atur Jadwal' }, { icon: 'payments', title: 'Pembayaran' }, { icon: 'forum', title: 'Mulai Diskusi' }];
 
   return (
-    <div className="max-w-container mx-auto px-4 sm:px-8 py-8 space-y-10">
+    <div className="max-w-container mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-10">
       <div className="text-center max-w-2xl mx-auto"><h1 className="text-h1 font-bold text-primary">Konsultasi Ahli</h1><p className="text-body-lg text-on-surface-variant mt-2">Rancang hunian impian bersama arsitek dan profesional terbaik.</p></div>
       {/* Flow */}
       <div className="flex justify-center gap-4 sm:gap-8 flex-wrap">{flowSteps.map((s, i) => (<div key={i} className="flex items-center gap-2 sm:gap-4"><div className="flex flex-col items-center gap-2"><div className="w-12 h-12 bg-primary-fixed rounded-xl flex items-center justify-center"><span className="material-symbols-outlined text-primary">{s.icon}</span></div><span className="text-xs font-semibold text-center">{s.title}</span></div>{i < 3 && <span className="material-symbols-outlined text-outline hidden sm:block">arrow_forward</span>}</div>))}</div>
@@ -28,7 +28,7 @@ export default function ConsultationPage() {
             <div className="flex flex-wrap gap-1">{e.topics.slice(0, 3).map(t => <span key={t} className="text-[10px] bg-chip-bg px-2 py-0.5 rounded-full font-semibold">{t}</span>)}</div>
           </div>
           <div className="p-4 bg-slate-50 flex items-center justify-between border-t border-outline-variant/30">
-            <div><p className="text-caption text-outline uppercase font-bold">Biaya Sesi</p><p className="font-semibold text-primary">{formatRupiah(e.fee)}<span className="text-xs font-normal">{e.feeUnit}</span></p></div>
+            <div className="min-w-0"><p className="text-caption text-outline uppercase font-bold">Biaya Sesi</p><p className="font-semibold text-primary price-text">{formatRupiah(e.fee)}<span className="text-xs font-normal">{e.feeUnit}</span></p></div>
             <div className="flex gap-2"><Link to={`/consultation/expert/${e.id}`} className="px-3 py-1.5 text-xs font-semibold border border-royal-blue text-royal-blue rounded-lg">Profil</Link><Link to={`/consultation/book/${e.id}`} className="px-3 py-1.5 text-xs font-semibold bg-cta-amber text-on-background rounded-lg">Booking</Link></div>
           </div>
         </div>

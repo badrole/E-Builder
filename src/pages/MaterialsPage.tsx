@@ -13,7 +13,7 @@ export default function MaterialsPage() {
   const filtered = products.filter(p => { if (cat !== 'Semua' && p.category !== cat) return false; if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false; return true; });
 
   return (
-    <div className="max-w-container mx-auto px-4 sm:px-8 py-8 space-y-8">
+    <div className="max-w-container mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8 overflow-hidden">
       <div className="text-center max-w-2xl mx-auto"><h1 className="text-h1 font-bold text-primary">Marketplace Material</h1><p className="text-body-lg text-on-surface-variant mt-2">Material bangunan berkualitas dari supplier terpercaya.</p></div>
       {/* Stores */}
       <section><h2 className="text-h3 font-bold mb-4">Toko Terpercaya</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">{stores.map(s => (
@@ -26,16 +26,16 @@ export default function MaterialsPage() {
       <div className="flex flex-col sm:flex-row gap-3"><div className="flex-1 relative"><span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span><input value={search} onChange={e => setSearch(e.target.value)} className="input-field pl-12" placeholder="Cari material..." /></div></div>
       <div className="flex flex-wrap gap-2">{materialCategories.map(c => <button key={c} onClick={() => setCat(c)} className={c === cat ? 'chip-active' : 'chip'}>{c}</button>)}</div>
       {/* Products */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {filtered.map(p => (
-          <div key={p.id} className="bg-white rounded-2xl border border-outline-variant overflow-hidden hover:shadow-md transition-all group flex flex-col">
+          <div key={p.id} className="bg-white rounded-2xl border border-outline-variant overflow-hidden hover:shadow-md transition-all group flex flex-col min-w-0">
             <Link to={`/materials/product/${p.id}`}><div className="aspect-square bg-surface-container overflow-hidden"><img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src={p.image} alt={p.name} /></div></Link>
             <div className="p-3 flex-1 flex flex-col space-y-2">
               <p className="text-[10px] font-bold text-outline uppercase">{p.category}</p>
               <Link to={`/materials/product/${p.id}`}><h4 className="font-bold text-sm line-clamp-2 hover:text-primary transition-colors">{p.name}</h4></Link>
-              <p className="text-xs text-on-surface-variant">{p.storeName}</p>
+              <p className="text-xs text-on-surface-variant break-words">{p.storeName}</p>
               <div className="flex-1"></div>
-              <p className="text-primary font-extrabold">{formatRupiah(p.price)}<span className="text-xs text-outline font-normal">/{p.unit}</span></p>
+              <p className="text-primary font-extrabold price-text">{formatRupiah(p.price)}<span className="text-xs text-outline font-normal">/{p.unit}</span></p>
               <button onClick={() => addToCart({ productId: p.id, name: p.name, price: p.price, quantity: 1, unit: p.unit, image: p.image, storeName: p.storeName })} className="w-full bg-royal-blue text-white py-2 rounded-lg text-xs font-semibold hover:bg-primary transition-all flex items-center justify-center gap-1"><span className="material-symbols-outlined text-sm">add_shopping_cart</span>Keranjang</button>
             </div>
           </div>

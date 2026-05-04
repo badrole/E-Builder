@@ -34,7 +34,7 @@ export default function SurveyPage() {
     );
   }
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-8 py-8 space-y-6">
+    <div className="max-w-2xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-6">
       <Link to="/e-construct" className="inline-flex items-center gap-2 text-primary font-semibold"><span className="material-symbols-outlined">arrow_back</span>Kembali</Link>
       <h1 className="text-h2 font-bold text-primary">Minta Survei Lokasi</h1>
       <p className="text-on-surface-variant">Isi formulir berikut dan tim kami akan menghubungi Anda untuk menjadwalkan survei gratis.</p>

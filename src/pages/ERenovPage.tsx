@@ -19,7 +19,7 @@ export default function ERenovPage() {
   });
 
   return (
-    <div className="max-w-container mx-auto px-4 sm:px-8 py-8 sm:py-12 space-y-8">
+    <div className="max-w-container mx-auto px-4 md:px-6 lg:px-8 py-8 sm:py-12 space-y-8 overflow-hidden">
       {/* Hero */}
       <div className="relative rounded-2xl overflow-hidden h-[200px] sm:h-[300px] shadow-xl">
         <img className="w-full h-full object-cover" src={workers[0]?.portfolio?.[0] || ''} alt="E-Renov" />
@@ -44,7 +44,7 @@ export default function ERenovPage() {
       {/* Categories */}
       <section>
         <div className="flex justify-between items-center mb-6"><h2 className="text-h2 font-bold">Kategori Renovasi</h2></div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
           {categories.slice(0, 16).map(c => (
             <Link key={c.id} to={`/e-renov/category/${c.id}`} className="group p-4 bg-white rounded-2xl border border-outline-variant/30 hover:border-royal-blue transition-all cursor-pointer text-center space-y-2 shadow-sm hover:shadow-md">
               <div className="w-10 h-10 mx-auto bg-primary-fixed/30 rounded-xl flex items-center justify-center text-royal-blue group-hover:scale-110 transition-transform"><span className="material-symbols-outlined">{c.icon}</span></div>
@@ -67,8 +67,8 @@ export default function ERenovPage() {
               <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                 <div><h4 className="font-bold">{w.name}</h4><p className="text-caption text-outline font-semibold uppercase">{w.spec} • {w.city}</p><p className="text-caption text-on-surface-variant mt-1">{w.jobs} pekerjaan selesai</p></div>
                 <div className="flex flex-wrap gap-1">{w.verified && <span className="text-[10px] bg-blue-50 text-royal-blue px-2 py-0.5 rounded-full font-semibold">Verified</span>}{w.recommended && <span className="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full font-semibold">Recommended</span>}{w.fastResponse && <span className="text-[10px] bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-semibold">Fast Response</span>}</div>
-                <div className="flex items-center justify-between pt-2 border-t border-outline-variant/30">
-                  <div className="text-royal-blue font-bold text-sm">{formatRupiah(w.price)}<span className="text-caption text-outline font-normal">{w.priceUnit}</span></div>
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-outline-variant/30">
+                  <div className="text-royal-blue font-bold text-sm price-text">{formatRupiah(w.price)}<span className="text-caption text-outline font-normal">{w.priceUnit}</span></div>
                   <div className="flex gap-2">
                     <Link to={`/worker/${w.id}`} className="px-3 py-1.5 text-xs font-semibold border border-royal-blue text-royal-blue rounded-lg hover:bg-blue-50">Profil</Link>
                     <Link to={`/booking/${w.id}`} className="px-3 py-1.5 text-xs font-semibold bg-royal-blue text-white rounded-lg">Pesan</Link>

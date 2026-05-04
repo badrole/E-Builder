@@ -18,16 +18,16 @@ export default function ConsultationBookPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-8 py-8 space-y-6">
+    <div className="max-w-2xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-6">
       <Link to={`/consultation/expert/${e.id}`} className="inline-flex items-center gap-2 text-primary font-semibold"><span className="material-symbols-outlined">arrow_back</span>Kembali</Link>
       <h1 className="text-h2 font-bold text-primary">Booking Konsultasi</h1>
-      <div className="bg-white rounded-2xl border border-outline-variant p-4 flex items-center gap-4"><img className="w-14 h-14 rounded-xl object-cover" src={e.image} alt={e.name} /><div><h3 className="font-bold">{e.name}</h3><p className="text-caption text-on-surface-variant">{e.spec} • {formatRupiah(e.fee)}{e.feeUnit}</p></div></div>
+      <div className="bg-white rounded-2xl border border-outline-variant p-4 flex items-center gap-4 overflow-hidden"><img className="w-14 h-14 rounded-xl object-cover flex-shrink-0" src={e.image} alt={e.name} /><div className="min-w-0"><h3 className="font-bold break-words">{e.name}</h3><p className="text-caption text-on-surface-variant price-text">{e.spec} • {formatRupiah(e.fee)}{e.feeUnit}</p></div></div>
       <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-outline-variant p-6 sm:p-8 space-y-4">
         <div><label className="text-sm font-semibold block mb-1">Topik</label><select value={form.topic} onChange={ev => setForm({...form, topic: ev.target.value})} className="input-field">{e.topics.map(t => <option key={t}>{t}</option>)}</select></div>
         <div className="grid grid-cols-2 gap-4"><div><label className="text-sm font-semibold block mb-1">Tanggal</label><input type="date" required value={form.date} onChange={ev => setForm({...form, date: ev.target.value})} className="input-field" min={new Date(Date.now()+86400000).toISOString().split('T')[0]} /></div><div><label className="text-sm font-semibold block mb-1">Waktu</label><select value={form.time} onChange={ev => setForm({...form, time: ev.target.value})} className="input-field">{['09:00','10:00','11:00','13:00','14:00','15:00','16:00'].map(t => <option key={t}>{t}</option>)}</select></div></div>
         <div><label className="text-sm font-semibold block mb-1">No. WhatsApp</label><input required value={form.phone} onChange={ev => setForm({...form, phone: ev.target.value})} className="input-field" placeholder="08xxx" /></div>
         <div><label className="text-sm font-semibold block mb-1">Deskripsi Kebutuhan</label><textarea required value={form.description} onChange={ev => setForm({...form, description: ev.target.value})} className="input-field min-h-[100px]" placeholder="Ceritakan kebutuhan konsultasi Anda..." /></div>
-        <div className="p-4 bg-primary/5 rounded-xl flex justify-between items-center"><span className="font-semibold">Biaya Konsultasi</span><span className="text-2xl font-black text-primary">{formatRupiah(e.fee)}</span></div>
+        <div className="p-4 bg-primary/5 rounded-xl flex justify-between items-center gap-3 overflow-hidden"><span className="font-semibold">Biaya Konsultasi</span><span className="text-2xl md:text-3xl font-black text-primary price-text-strong text-right">{formatRupiah(e.fee)}</span></div>
         <button type="submit" className="btn-cta w-full text-lg">Lanjut ke Pembayaran</button>
       </form>
     </div>

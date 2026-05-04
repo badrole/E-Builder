@@ -53,5 +53,5 @@ export default function PriceCountUp({
   }, [value, duration]);
 
   const formattedCount = count.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return <span ref={ref} className={className}>Rp{formattedCount}</span>;
+  return <span ref={ref} className={`price-text-strong ${className}`.trim()}>Rp{formattedCount}</span>;
 }
