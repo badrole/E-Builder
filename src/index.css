@@ -111,6 +111,206 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .chatbot-worker-button {
+    transform-style: preserve-3d;
+  }
+  .chatbot-worker-button:hover {
+    transform: translateY(-3px) scale(1.06);
+  }
+  .chatbot-worker-button:active {
+    transform: translateY(0) scale(0.96);
+  }
+  .chibi-worker-fab,
+  .chibi-worker-fab * {
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+  }
+  .chibi-worker-fab {
+    inset: -8px -6px -2px -6px;
+    transform-style: preserve-3d;
+    animation: chibi-idle 2.8s ease-in-out infinite;
+  }
+  .chibi-worker-shadow {
+    left: 18px;
+    right: 18px;
+    bottom: 6px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(37, 47, 77, 0.25);
+    filter: blur(2px);
+    animation: chibi-shadow 2.8s ease-in-out infinite;
+  }
+  .chibi-worker-body {
+    left: 13px;
+    top: 7px;
+    width: 50px;
+    height: 62px;
+    transform-style: preserve-3d;
+  }
+  .chibi-worker-head {
+    left: 8px;
+    top: 0;
+    width: 34px;
+    height: 32px;
+    border-radius: 46% 46% 50% 50%;
+    background: linear-gradient(135deg, #ffd6a8 0%, #f7aa73 100%);
+    border: 2px solid rgba(111, 65, 38, 0.22);
+    box-shadow: inset -5px -5px 0 rgba(169, 86, 48, 0.12), 0 4px 8px rgba(26, 31, 55, 0.2);
+    z-index: 4;
+  }
+  .chibi-worker-helmet {
+    left: -2px;
+    top: -7px;
+    width: 38px;
+    height: 18px;
+    border-radius: 20px 20px 8px 8px;
+    background: linear-gradient(135deg, #ffe06a 0%, #f4a900 100%);
+    border: 2px solid #b77800;
+    box-shadow: inset -4px -3px 0 rgba(151, 94, 0, 0.2);
+    z-index: 5;
+  }
+  .chibi-worker-helmet::after {
+    content: '';
+    left: -3px;
+    bottom: -4px;
+    width: 44px;
+    height: 7px;
+    border-radius: 999px;
+    background: #f5b400;
+    border: 2px solid #b77800;
+  }
+  .chibi-worker-helmet-ridge {
+    left: 16px;
+    top: -2px;
+    width: 6px;
+    height: 19px;
+    border-radius: 8px;
+    background: rgba(255, 244, 159, 0.9);
+    border-left: 1px solid rgba(183, 120, 0, 0.45);
+    border-right: 1px solid rgba(183, 120, 0, 0.45);
+  }
+  .chibi-worker-hair {
+    top: 9px;
+    width: 8px;
+    height: 10px;
+    border-radius: 2px 2px 8px 8px;
+    background: #513022;
+    z-index: 3;
+  }
+  .chibi-worker-hair-left {
+    left: -2px;
+    transform: rotate(20deg);
+  }
+  .chibi-worker-hair-right {
+    right: -2px;
+    transform: rotate(-20deg);
+  }
+  .chibi-worker-face {
+    inset: 9px 6px 5px 6px;
+    z-index: 6;
+  }
+  .chibi-worker-eye {
+    top: 5px;
+    width: 4px;
+    height: 6px;
+    border-radius: 999px;
+    background: #1f2937;
+    animation: chibi-blink 4.5s ease-in-out infinite;
+  }
+  .chibi-worker-eye-left {
+    left: 5px;
+  }
+  .chibi-worker-eye-right {
+    right: 5px;
+  }
+  .chibi-worker-smile {
+    left: 9px;
+    top: 13px;
+    width: 9px;
+    height: 5px;
+    border-bottom: 2px solid #6f3f2b;
+    border-radius: 0 0 999px 999px;
+  }
+  .chibi-worker-torso {
+    left: 9px;
+    top: 29px;
+    width: 32px;
+    height: 27px;
+    border-radius: 10px 10px 7px 7px;
+    background: linear-gradient(145deg, #2563eb 0%, #1746b7 100%);
+    border: 2px solid rgba(9, 34, 92, 0.3);
+    box-shadow: inset -5px -4px 0 rgba(5, 27, 78, 0.18);
+    z-index: 2;
+  }
+  .chibi-worker-shirt {
+    inset: 3px 8px 5px 8px;
+    border-radius: 4px;
+    background: #f8fafc;
+  }
+  .chibi-worker-vest {
+    inset: 1px 3px 5px 3px;
+    border-radius: 8px 8px 5px 5px;
+    background:
+      linear-gradient(90deg, transparent 39%, #ffd95b 40%, #ffd95b 60%, transparent 61%),
+      linear-gradient(135deg, #ff9f1c 0%, #f97316 100%);
+    z-index: 2;
+  }
+  .chibi-worker-arm {
+    top: 4px;
+    width: 9px;
+    height: 24px;
+    border-radius: 999px;
+    background: linear-gradient(145deg, #ffd2a2, #ee9c65);
+    transform-origin: top center;
+    z-index: 1;
+  }
+  .chibi-worker-arm-left {
+    left: -7px;
+    transform: rotate(17deg);
+  }
+  .chibi-worker-arm-right {
+    right: -7px;
+    transform: rotate(-30deg);
+    animation: chibi-wave 1.45s ease-in-out infinite;
+  }
+  .chibi-worker-hand {
+    left: 0;
+    bottom: -2px;
+    width: 10px;
+    height: 9px;
+    border-radius: 999px;
+    background: #f7b27e;
+    border: 1px solid rgba(111, 65, 38, 0.2);
+  }
+  .chibi-worker-blueprint {
+    right: -9px;
+    bottom: -1px;
+    width: 15px;
+    height: 18px;
+    border-radius: 3px;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,0.45) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,0.45) 1px, transparent 1px),
+      linear-gradient(135deg, #5bd7ff, #1788d8);
+    background-size: 5px 5px, 5px 5px, auto;
+    border: 1px solid #0b65a8;
+    transform: rotate(20deg);
+  }
+  .chibi-worker-leg {
+    bottom: -11px;
+    width: 10px;
+    height: 14px;
+    border-radius: 4px 4px 6px 6px;
+    background: #1f2937;
+    z-index: -1;
+  }
+  .chibi-worker-leg-left {
+    left: 5px;
+  }
+  .chibi-worker-leg-right {
+    right: 5px;
+  }
 }
 
 @keyframes soft-float {
@@ -139,6 +339,44 @@
   }
   78%, 100% {
     transform: translateX(120%);
+  }
+}
+
+@keyframes chibi-idle {
+  0%, 100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(1.5deg);
+  }
+}
+
+@keyframes chibi-shadow {
+  0%, 100% {
+    opacity: 0.34;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 0.2;
+    transform: scaleX(0.82);
+  }
+}
+
+@keyframes chibi-wave {
+  0%, 100% {
+    transform: rotate(-32deg);
+  }
+  50% {
+    transform: rotate(-58deg) translateY(-1px);
+  }
+}
+
+@keyframes chibi-blink {
+  0%, 92%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
   }
 }
 

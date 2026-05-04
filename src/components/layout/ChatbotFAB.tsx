@@ -1,6 +1,45 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+function ChibiWorkerMascot({ open }: { open: boolean }) {
+  if (open) {
+    return <span className="material-symbols-outlined text-2xl">close</span>;
+  }
+
+  return (
+    <span className="chibi-worker-fab" aria-hidden="true">
+      <span className="chibi-worker-shadow" />
+      <span className="chibi-worker-body">
+        <span className="chibi-worker-head">
+          <span className="chibi-worker-helmet">
+            <span className="chibi-worker-helmet-ridge" />
+          </span>
+          <span className="chibi-worker-hair chibi-worker-hair-left" />
+          <span className="chibi-worker-hair chibi-worker-hair-right" />
+          <span className="chibi-worker-face">
+            <span className="chibi-worker-eye chibi-worker-eye-left" />
+            <span className="chibi-worker-eye chibi-worker-eye-right" />
+            <span className="chibi-worker-smile" />
+          </span>
+        </span>
+        <span className="chibi-worker-torso">
+          <span className="chibi-worker-vest" />
+          <span className="chibi-worker-shirt" />
+          <span className="chibi-worker-arm chibi-worker-arm-left">
+            <span className="chibi-worker-hand" />
+          </span>
+          <span className="chibi-worker-arm chibi-worker-arm-right">
+            <span className="chibi-worker-hand" />
+            <span className="chibi-worker-blueprint" />
+          </span>
+          <span className="chibi-worker-leg chibi-worker-leg-left" />
+          <span className="chibi-worker-leg chibi-worker-leg-right" />
+        </span>
+      </span>
+    </span>
+  );
+}
+
 export default function ChatbotFAB() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -24,8 +63,13 @@ export default function ChatbotFAB() {
 
   return (
     <>
-      <button onClick={() => setOpen(!open)} className="fixed bottom-20 right-4 sm:right-8 w-14 h-14 bg-cta-amber text-on-background rounded-full shadow-2xl flex items-center justify-center z-40 hover:scale-110 transition-transform md:bottom-8">
-        <span className="material-symbols-outlined">{open ? 'close' : 'smart_toy'}</span>
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        aria-label={open ? 'Tutup chatbot' : 'Buka chatbot'}
+        className="chatbot-worker-button fixed bottom-20 right-4 sm:right-8 w-16 h-16 bg-cta-amber text-on-background rounded-full shadow-2xl flex items-center justify-center z-40 transition-transform md:bottom-8"
+      >
+        <ChibiWorkerMascot open={open} />
       </button>
       {open && (
         <div className="fixed bottom-36 right-4 sm:right-8 w-80 sm:w-96 bg-white rounded-2xl shadow-card-hover border border-outline-variant z-40 flex flex-col max-h-[500px] md:bottom-24">
