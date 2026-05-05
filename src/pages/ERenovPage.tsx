@@ -1,16 +1,31 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { categories, workers } from '../data/mockData';
 import { formatRupiah } from '../utils/helpers';
+import { fetchPartners, mapPartnerToWorker } from '../lib/partners';
 
 export default function ERenovPage() {
   const [search, setSearch] = useState('');
   const [selectedCat, setSelectedCat] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [minRating, setMinRating] = useState(0);
+  const [supabaseWorkers, setSupabaseWorkers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState('');
   const cities = ['Jakarta','Bandung','Surabaya','Sidoarjo','Malang','Yogyakarta','Semarang','Bekasi'];
+  const allWorkers = supabaseWorkers.length > 0 ? supabaseWorkers : workers;
 
-  const filtered = workers.filter(w => {
+  useEffect(() => {
+    fetchPartners('Worker', 'active')
+      .then(data => setSupabaseWorkers(data.map(mapPartnerToWorker)))
+      .catch(error => {
+        console.error('Supabase worker fetch failed:', error);
+        setFetchError('Data mitra belum dapat dimuat. Menampilkan data lokal.');
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filtered = allWorkers.filter(w => {
     if (search && !w.name.toLowerCase().includes(search.toLowerCase()) && !w.category.toLowerCase().includes(search.toLowerCase())) return false;
     if (selectedCat && w.category !== selectedCat) return false;
     if (selectedCity && w.city !== selectedCity) return false;
@@ -57,6 +72,9 @@ export default function ERenovPage() {
       {/* Workers */}
       <section>
         <h2 className="text-h2 font-bold mb-6">Pekerja Tersedia ({filtered.length})</h2>
+        {loading && <div className="bg-white rounded-2xl border border-outline-variant p-6 text-on-surface-variant">Memuat mitra dari Supabase...</div>}
+        {fetchError && <div className="bg-amber-50 text-amber-800 rounded-2xl border border-amber-200 p-4 mb-4 text-sm">{fetchError}</div>}
+        {!loading && filtered.length === 0 && <div className="bg-white rounded-2xl border border-outline-variant p-6 text-on-surface-variant">Belum ada mitra yang sesuai.</div>}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filtered.map(w => (
             <div key={w.id} className="bg-white rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden hover:shadow-md transition-all flex flex-col">

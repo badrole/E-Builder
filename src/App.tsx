@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import MobileNav from './components/layout/MobileNav';
@@ -6,6 +6,7 @@ import ChatbotFAB from './components/layout/ChatbotFAB';
 import Toast from './components/ui/Toast';
 import ClickSpark from './components/ClickSpark';
 import ScrollAnimator from './components/ScrollAnimator';
+import AppErrorBoundary from './components/AppErrorBoundary';
 import { lazy, Suspense } from 'react';
 
 const Home = lazy(() => import('./pages/HomePage'));
@@ -42,6 +43,11 @@ const BecomePartner = lazy(() => import('./pages/BecomePartnerPage'));
 const About = lazy(() => import('./pages/AboutPage'));
 const Contact = lazy(() => import('./pages/ContactPage'));
 const NotFound = lazy(() => import('./pages/NotFoundPage'));
+const AdminLogin = lazy(() => import('./pages/admin/AdminLoginPage'));
+const AdminShell = lazy(() => import('./pages/admin/AdminShell'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboardPage'));
+const AdminPartners = lazy(() => import('./pages/admin/AdminPartnersPage'));
+const AdminPartnerForm = lazy(() => import('./pages/admin/AdminPartnerFormPage'));
 
 function Loading() {
   return <div className="flex items-center justify-center min-h-[60vh]"><div className="w-12 h-12 border-4 border-primary-fixed border-t-royal-blue rounded-full animate-spin"></div></div>;
@@ -52,8 +58,9 @@ export default function App() {
     <div className="min-h-screen flex flex-col blueprint-bg">
       <Header />
       <main className="flex-1 pb-20 md:pb-0">
-        <Suspense fallback={<Loading />}>
-          <Routes>
+        <AppErrorBoundary>
+          <Suspense fallback={<Loading />}>
+            <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/e-renov" element={<ERenov />} />
             <Route path="/e-renov/category/:id" element={<CategoryWorkers />} />
@@ -91,9 +98,18 @@ export default function App() {
             <Route path="/become-partner" element={<BecomePartner />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminShell />}>
+              <Route index element={<Navigate to="/admin/dashboard" replace />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="partners" element={<AdminPartners />} />
+              <Route path="partners/add" element={<AdminPartnerForm />} />
+              <Route path="partners/edit/:id" element={<AdminPartnerForm />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+            </Routes>
+          </Suspense>
+        </AppErrorBoundary>
       </main>
       <Footer />
       <MobileNav />

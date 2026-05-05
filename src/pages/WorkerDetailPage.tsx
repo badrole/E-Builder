@@ -1,15 +1,33 @@
 import { useParams, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { workers, reviews } from '../data/mockData';
 import { formatRupiah } from '../utils/helpers';
 import { useStore } from '../store/useStore';
 import PriceCountUp from '../components/PriceCountUp';
+import { fetchPartnerById, mapPartnerToWorker } from '../lib/partners';
+import { openWhatsApp } from '../utils/formatters';
 
 export default function WorkerDetailPage() {
   const { id } = useParams();
-  const w = workers.find(w => w.id === id) || workers[0];
+  const mockWorker = workers.find(w => w.id === id);
+  const [supabaseWorker, setSupabaseWorker] = useState<any | null>(null);
+  const [loading, setLoading] = useState(!mockWorker);
+  const w = supabaseWorker || mockWorker || workers[0];
   const { favorites, toggleFavorite } = useStore();
   const isFav = favorites.workers.includes(w.id);
   const workerReviews = reviews.filter(r => r.workerId === w.id);
+
+  useEffect(() => {
+    if (!id || mockWorker) return;
+    fetchPartnerById(id)
+      .then(partner => {
+        if (partner?.type === 'Worker' && partner.status === 'active') setSupabaseWorker(mapPartnerToWorker(partner));
+      })
+      .catch(error => console.error('Supabase worker detail fetch failed:', error))
+      .finally(() => setLoading(false));
+  }, [id, mockWorker]);
+
+  if (loading) return <div className="max-w-container mx-auto px-4 sm:px-8 py-16 text-on-surface-variant">Memuat profil mitra...</div>;
 
   return (
     <div className="max-w-container mx-auto px-4 sm:px-8 py-8 space-y-8">
@@ -28,7 +46,7 @@ export default function WorkerDetailPage() {
               <button onClick={() => toggleFavorite('workers', w.id)} className="p-2 rounded-full hover:bg-red-50"><span className={`material-symbols-outlined text-2xl ${isFav ? 'text-red-500 material-icon-filled' : 'text-outline'}`}>favorite</span></button>
             </div>
           </div>
-          <div className="bg-white rounded-2xl border border-outline-variant p-6"><h3 className="font-bold mb-4">Portfolio</h3><div className="grid grid-cols-2 sm:grid-cols-3 gap-4">{w.portfolio.map((img, i) => <img key={i} className="rounded-xl h-36 w-full object-cover" src={img} alt="portfolio" />)}</div></div>
+          <div className="bg-white rounded-2xl border border-outline-variant p-6"><h3 className="font-bold mb-4">Portfolio</h3><div className="grid grid-cols-2 sm:grid-cols-3 gap-4">{w.portfolio.map((img: string, i: number) => <img key={i} className="rounded-xl h-36 w-full object-cover" src={img} alt="portfolio" />)}</div></div>
           <div className="bg-white rounded-2xl border border-outline-variant p-6"><h3 className="font-bold mb-4">Ulasan ({workerReviews.length})</h3>
             {workerReviews.length > 0 ? workerReviews.map(r => (
               <div key={r.id} className="py-4 border-b border-outline-variant/30 last:border-0"><div className="flex items-center gap-2 mb-2"><div className="flex">{[...Array(r.rating)].map((_, i) => <span key={i} className="material-symbols-outlined text-warm-amber text-sm material-icon-filled">star</span>)}</div><span className="text-caption text-outline">{r.date}</span></div><p className="text-sm font-semibold">{r.user}</p><p className="text-sm text-on-surface-variant">{r.text}</p></div>
@@ -41,7 +59,7 @@ export default function WorkerDetailPage() {
             <div className="p-4 bg-primary/5 rounded-xl"><p className="text-3xl font-black text-primary"><PriceCountUp value={w.price} /></p><p className="text-sm text-on-surface-variant">{w.priceUnit}</p></div>
             <div className="space-y-2 text-sm"><div className="flex items-center gap-2"><span className="material-symbols-outlined text-green-500 text-sm">check_circle</span>{w.warranty}</div><div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary text-sm">phone</span>{w.phone}</div></div>
             <Link to={`/booking/${w.id}`} className="btn-cta w-full text-center block">Booking Sekarang</Link>
-            <a href={`https://wa.me/62${w.phone.slice(1)}`} target="_blank" rel="noreferrer" className="btn-outline w-full text-center block">Chat WhatsApp</a>
+            <button onClick={() => openWhatsApp(w.whatsappNumber || w.phone, 'Halo, saya pelanggan E-Builder. Saya ingin berkonsultasi tentang layanan.')} className="btn-outline w-full text-center block">Chat WhatsApp</button>
           </div>
         </div>
       </div>

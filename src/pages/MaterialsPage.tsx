@@ -1,25 +1,40 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { products, stores } from '../data/mockData';
 import { formatRupiah } from '../utils/helpers';
 import { useStore } from '../store/useStore';
+import { fetchPartners, mapPartnerToStore } from '../lib/partners';
 
 const materialCategories = ['Semua','Semen','Cat','Keramik','Plumbing','Listrik','Kayu','Pasir & Bata','Sanitary'];
 
 export default function MaterialsPage() {
   const [cat, setCat] = useState('Semua');
   const [search, setSearch] = useState('');
+  const [supabaseStores, setSupabaseStores] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState('');
   const { addToCart } = useStore();
+  const allStores = supabaseStores.length > 0 ? supabaseStores : stores;
   const filtered = products.filter(p => { if (cat !== 'Semua' && p.category !== cat) return false; if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false; return true; });
+
+  useEffect(() => {
+    fetchPartners('Material Store', 'active')
+      .then(data => setSupabaseStores(data.map(mapPartnerToStore)))
+      .catch(error => {
+        console.error('Supabase material store fetch failed:', error);
+        setFetchError('Data toko belum dapat dimuat. Menampilkan data lokal.');
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="max-w-container mx-auto px-4 sm:px-8 py-8 space-y-8">
       <div className="text-center max-w-2xl mx-auto"><h1 className="text-h1 font-bold text-primary">Marketplace Material</h1><p className="text-body-lg text-on-surface-variant mt-2">Material bangunan berkualitas dari supplier terpercaya.</p></div>
       {/* Stores */}
-      <section><h2 className="text-h3 font-bold mb-4">Toko Terpercaya</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">{stores.map(s => (
+      <section><h2 className="text-h3 font-bold mb-4">Toko Terpercaya</h2>{loading && <div className="bg-white rounded-2xl border border-outline-variant p-6 text-on-surface-variant mb-4">Memuat toko dari Supabase...</div>}{fetchError && <div className="bg-amber-50 text-amber-800 rounded-2xl border border-amber-200 p-4 mb-4 text-sm">{fetchError}</div>}{!loading && allStores.length === 0 && <div className="bg-white rounded-2xl border border-outline-variant p-6 text-on-surface-variant mb-4">Belum ada toko material.</div>}<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">{allStores.map(s => (
         <Link key={s.id} to={`/materials/store/${s.id}`} className="bg-white rounded-2xl border border-outline-variant overflow-hidden hover:shadow-md transition-all">
           <div className="h-32 bg-surface-container"><img className="w-full h-full object-cover" src={s.image} alt={s.name} /></div>
-          <div className="p-4 space-y-2"><h3 className="font-bold text-sm">{s.name}</h3><p className="text-caption text-outline">{s.city}</p><div className="flex items-center gap-1"><span className="material-symbols-outlined text-warm-amber text-sm material-icon-filled">star</span><span className="text-sm font-semibold">{s.rating}</span><span className="text-caption text-outline">({s.reviews})</span></div><div className="flex gap-1 flex-wrap">{s.categories.slice(0,2).map(c => <span key={c} className="text-[10px] bg-chip-bg px-2 py-0.5 rounded-full font-semibold">{c}</span>)}</div></div>
+          <div className="p-4 space-y-2"><h3 className="font-bold text-sm">{s.name}</h3><p className="text-caption text-outline">{s.city}</p><div className="flex items-center gap-1"><span className="material-symbols-outlined text-warm-amber text-sm material-icon-filled">star</span><span className="text-sm font-semibold">{s.rating}</span><span className="text-caption text-outline">({s.reviews})</span></div><div className="flex gap-1 flex-wrap">{s.categories.slice(0,2).map((c: string) => <span key={c} className="text-[10px] bg-chip-bg px-2 py-0.5 rounded-full font-semibold">{c}</span>)}</div></div>
         </Link>
       ))}</div></section>
       {/* Filters */}

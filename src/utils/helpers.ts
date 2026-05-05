@@ -1,5 +1,7 @@
+import { formatIDR, formatWhatsAppNumber, openWhatsApp } from './formatters';
+
 export function formatRupiah(amount: number): string {
-  return 'Rp' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return formatIDR(amount);
 }
 
 export function formatRupiahShort(amount: number): string {
@@ -73,15 +75,8 @@ export function getSearchRoute(query: string): string {
   return '/e-renov';
 }
 
-export function formatWhatsAppNumber(phone: string): string {
-  const cleaned = phone.replace(/\D/g, "");
-  if (cleaned.startsWith("08")) return "62" + cleaned.slice(1);
-  if (cleaned.startsWith("8")) return "62" + cleaned;
-  return cleaned;
-}
+export { formatWhatsAppNumber };
 
 export function openProviderWhatsApp(phone: string, message: string): void {
-  const formattedPhone = formatWhatsAppNumber(phone);
-  const url = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank", "noopener,noreferrer");
+  openWhatsApp(phone, message);
 }
