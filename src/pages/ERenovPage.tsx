@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { categories, workers } from '../data/mockData';
 import { formatRupiah } from '../utils/helpers';
 import { fetchPartners, mapPartnerToWorker } from '../lib/partners';
@@ -76,24 +77,34 @@ export default function ERenovPage() {
         {fetchError && <div className="bg-amber-50 text-amber-800 rounded-2xl border border-amber-200 p-4 mb-4 text-sm">{fetchError}</div>}
         {!loading && filtered.length === 0 && <div className="bg-white rounded-2xl border border-outline-variant p-6 text-on-surface-variant">Belum ada mitra yang sesuai.</div>}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filtered.map(w => (
-            <div key={w.id} className="bg-white rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden hover:shadow-md transition-all flex flex-col">
-              <div className="relative h-44"><img className="w-full h-full object-cover" src={w.image} alt={w.name} />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded-lg flex items-center gap-1"><span className="material-symbols-outlined text-warm-amber text-sm material-icon-filled">star</span><span className="font-semibold text-caption">{w.rating}</span></div>
-                {w.verified && <div className="absolute top-3 left-3"><span className="material-symbols-outlined text-royal-blue bg-white/90 rounded-full p-1 text-sm material-icon-filled">verified</span></div>}
+          {filtered.map((w, i) => (
+            <motion.div
+              key={w.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ delay: i * 0.06, duration: 0.5, ease: "easeOut" }}
+              whileHover={{ y: -6, scale: 1.03 }}
+              className="group bg-white rounded-2xl border border-outline-variant/30 shadow-[0_4px_20px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(17,31,162,0.12)] overflow-hidden transition-shadow duration-300 flex flex-col cursor-pointer"
+            >
+              <div className="relative h-44 overflow-hidden">
+                <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" src={w.image} alt={w.name} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm"><span className="material-symbols-outlined text-warm-amber text-sm material-icon-filled">star</span><span className="font-semibold text-caption">{w.rating}</span></div>
+                {w.verified && <div className="absolute top-3 left-3"><span className="material-symbols-outlined text-royal-blue bg-white/90 rounded-full p-1 text-sm material-icon-filled shadow-sm">verified</span></div>}
               </div>
               <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-                <div><h4 className="font-bold">{w.name}</h4><p className="text-caption text-outline font-semibold uppercase">{w.spec} • {w.city}</p><p className="text-caption text-on-surface-variant mt-1">{w.jobs} pekerjaan selesai</p></div>
+                <div><h4 className="font-bold group-hover:text-royal-blue transition-colors duration-300">{w.name}</h4><p className="text-caption text-outline font-semibold uppercase">{w.spec} • {w.city}</p><p className="text-caption text-on-surface-variant mt-1">{w.jobs} pekerjaan selesai</p></div>
                 <div className="flex flex-wrap gap-1">{w.verified && <span className="text-[10px] bg-blue-50 text-royal-blue px-2 py-0.5 rounded-full font-semibold">Verified</span>}{w.recommended && <span className="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full font-semibold">Recommended</span>}{w.fastResponse && <span className="text-[10px] bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-semibold">Fast Response</span>}</div>
                 <div className="flex items-center justify-between pt-2 border-t border-outline-variant/30">
                   <div className="text-royal-blue font-bold text-sm">{formatRupiah(w.price)}<span className="text-caption text-outline font-normal">{w.priceUnit}</span></div>
                   <div className="flex gap-2">
-                    <Link to={`/worker/${w.id}`} className="px-3 py-1.5 text-xs font-semibold border border-royal-blue text-royal-blue rounded-lg hover:bg-blue-50">Profil</Link>
-                    <Link to={`/booking/${w.id}`} className="px-3 py-1.5 text-xs font-semibold bg-royal-blue text-white rounded-lg">Pesan</Link>
+                    <Link to={`/worker/${w.id}`} className="px-3 py-1.5 text-xs font-semibold border border-royal-blue text-royal-blue rounded-lg hover:bg-blue-50 transition-colors">Profil</Link>
+                    <Link to={`/booking/${w.id}`} className="px-3 py-1.5 text-xs font-semibold bg-royal-blue text-white rounded-lg hover:bg-blue-800 transition-colors">Pesan</Link>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>

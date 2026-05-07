@@ -17,6 +17,7 @@ export interface SupabasePartner {
   experience: string | null;
   description: string | null;
   image_url: string | null;
+  portfolio_urls: string[] | null;
   status: PartnerStatus;
   created_at: string;
 }
@@ -68,7 +69,27 @@ export async function insertBooking(payload: Omit<SupabaseBooking, 'id' | 'creat
   return data as SupabaseBooking;
 }
 
+export async function uploadPortfolioImage(file: File): Promise<string> {
+  const ext = file.name.split('.').pop() || 'jpg';
+  const path = `portfolio/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const { error } = await supabase.storage.from('partner-images').upload(path, file, { upsert: false });
+  if (error) throw new Error(`Upload portofolio gagal: ${error.message}`);
+  const { data } = supabase.storage.from('partner-images').getPublicUrl(path);
+  return data.publicUrl;
+}
+
+export async function updatePartnerPortfolio(partnerId: string, portfolioUrls: string[]) {
+  const { error } = await supabase
+    .from('partners')
+    .update({ portfolio_urls: portfolioUrls })
+    .eq('id', partnerId);
+  if (error) throw new Error(`Simpan portofolio gagal: ${error.message}`);
+}
+
 export function mapPartnerToWorker(partner: SupabasePartner) {
+  const portfolioImages = partner.portfolio_urls && partner.portfolio_urls.length > 0
+    ? partner.portfolio_urls
+    : [partner.image_url || IMAGES.bathroom];
   return {
     id: partner.id,
     supabaseId: partner.id,
@@ -80,7 +101,7 @@ export function mapPartnerToWorker(partner: SupabasePartner) {
     reviews: 0,
     jobs: 0,
     price: Number(partner.price_from || 0),
-    priceUnit: '/mulai',
+    priceUnit: '/sesi',
     status: 'idle' as const,
     verified: true,
     recommended: false,
@@ -92,7 +113,7 @@ export function mapPartnerToWorker(partner: SupabasePartner) {
     warranty: 'Garansi sesuai kesepakatan',
     bookedDates: [],
     pendingDates: [],
-    portfolio: [partner.image_url || IMAGES.bathroom],
+    portfolio: portfolioImages,
     description: partner.description || '',
   };
 }
