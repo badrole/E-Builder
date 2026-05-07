@@ -28,68 +28,102 @@ export default function HomePage() {
 
   return (
     <div className="overflow-hidden">
-      {/* Hero */}
-      <section className="relative px-4 sm:px-8 pt-8 sm:pt-12 pb-16 sm:pb-24 max-w-container mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="lg:col-span-6 z-10"
+      {/* Hero — Cinematic Video Background */}
+      <section className="relative h-[85vh] min-h-[520px] max-h-[900px] overflow-hidden flex items-center">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster={IMAGES.hero}
+            className="w-full h-full object-cover"
           >
+            <source src="/assets/video/A_cinematic_fast_paced_sequen.mp4" type="video/mp4" />
+          </video>
+          {/* Gradient Overlays for readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
+          {/* Subtle animated grain texture */}
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}></div>
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-container mx-auto px-4 sm:px-8 w-full">
+          <div className="max-w-2xl">
             <motion.span 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold text-xs mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white font-semibold text-xs mb-6 border border-white/20"
             >
               ARSITEKTUR & KONSTRUKSI DIGITAL
             </motion.span>
-            <h1 className="text-h1 font-bold text-primary mb-6 leading-tight">
-              Bangun Impian Anda dengan <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-tertiary-fixed-dim">
+
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.7, ease: "easeOut" }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 leading-[1.1] drop-shadow-lg"
+            >
+              Bangun Impian Anda dengan{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cta-amber via-yellow-300 to-amber-400">
                 Presisi Arsitektur.
               </span>
-            </h1>
-            <p className="text-body-lg text-on-surface-variant max-w-xl mb-8">Platform digital premium untuk renovasi, konstruksi, dan project tracking. Temukan tenaga ahli terverifikasi dan material berkualitas.</p>
-            <div className="flex flex-wrap gap-3">
+            </motion.h1>
+
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className="text-lg sm:text-xl text-white/80 max-w-xl mb-10 font-medium leading-relaxed"
+            >
+              Platform digital premium untuk renovasi, konstruksi, dan project tracking. Temukan tenaga ahli terverifikasi dan material berkualitas.
+            </motion.p>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+              className="flex flex-wrap gap-4"
+            >
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link to="/e-renov" className="btn-cta flex items-center gap-2"><span className="material-symbols-outlined">explore</span>Cari Jasa</Link>
+                <Link to="/e-renov" className="btn-cta flex items-center gap-2 text-base px-8 py-4 shadow-[0_0_30px_rgba(255,181,71,0.4)]">
+                  <span className="material-symbols-outlined">explore</span>Cari Jasa
+                </Link>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link to="/rab" className="btn-outline flex items-center gap-2 bg-white"><span className="material-symbols-outlined">calculate</span>Hitung RAB</Link>
+                <Link to="/rab" className="flex items-center gap-2 text-base px-8 py-4 rounded-xl font-bold bg-white/10 backdrop-blur-md text-white border border-white/30 hover:bg-white/20 transition-all">
+                  <span className="material-symbols-outlined">calculate</span>Hitung RAB
+                </Link>
               </motion.div>
-            </div>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-            className="lg:col-span-6 relative h-[300px] sm:h-[400px] lg:h-[500px] mt-8 lg:mt-0"
-          >
-            <div className="absolute inset-0 bg-gradient-to-tr from-secondary/30 to-primary/10 rounded-[2rem] -rotate-3 translate-x-4 animate-soft-float blur-sm"></div>
-            <div className="absolute inset-0 bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-outline-variant/50">
-              <img alt="Modern Architecture" className="w-full h-full object-cover transition-transform duration-[10s] hover:scale-110" src={IMAGES.hero} />
-              <motion.div 
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-8 glass-card p-4 sm:p-6 rounded-2xl"
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                  <p className="text-[10px] font-bold tracking-widest text-primary uppercase">Sedang Dipromosikan</p>
-                </div>
-                <p className="text-xl sm:text-2xl font-black text-on-surface">Renovasi Premium 2026</p>
-              </motion.div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
+
+
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        >
+          <span className="text-white/50 text-[10px] font-bold uppercase tracking-widest">Scroll</span>
+          <motion.div 
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            className="w-5 h-8 rounded-full border-2 border-white/30 flex justify-center pt-1.5"
+          >
+            <div className="w-1 h-1.5 rounded-full bg-white/60"></div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Banner Carousel */}
-      <section className="max-w-container mx-auto px-4 sm:px-8 -mt-8 relative z-20">
+      <section className="max-w-container mx-auto px-4 sm:px-8 -mt-16 relative z-20">
         <div className="relative overflow-hidden rounded-[2rem] shadow-[0_20px_40px_rgba(17,31,162,0.15)]">
           <AnimatePresence mode="wait">
             <motion.div 
